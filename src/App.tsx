@@ -6,7 +6,8 @@ import {
   writeTextFile,
   exists,
 } from "@tauri-apps/api/fs";
-import { Button, Card, PasswordInput, Stack, Text, Title } from "@mantine/core";
+import { Button, Card, Stack, Text, Title } from "@mantine/core";
+import { StrictPasswordInput } from "./components/StrictPasswordInput";
 import { _arrayBufferToBase64, _base64ToArrayBuffer } from "./utils/byte-utils";
 import { notifications } from "@mantine/notifications";
 import { useAppContext } from "./contexts/App";
@@ -29,11 +30,6 @@ function App() {
       }
       if (password !== password2) {
         error("Passwords do not match");
-        return;
-      }
-
-      if (password.length < 8) {
-        error("Password must be at least 8 characters long");
         return;
       }
 
@@ -113,13 +109,13 @@ function App() {
             }}
           >
             <Stack>
-              <PasswordInput
+              <StrictPasswordInput
                 placeholder="master password"
                 value={password}
                 onChange={(e) => setPassword(e.currentTarget.value)}
               />
               {firstTime && (
-                <PasswordInput
+                <StrictPasswordInput
                   placeholder="re-enter password"
                   value={password2}
                   onChange={(e) => setPassword2(e.currentTarget.value)}
